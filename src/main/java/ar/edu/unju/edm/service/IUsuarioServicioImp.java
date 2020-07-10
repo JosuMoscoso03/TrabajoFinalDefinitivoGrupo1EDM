@@ -4,6 +4,7 @@ package ar.edu.unju.edm.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unju.edm.model.Usuario;
@@ -16,9 +17,12 @@ public class IUsuarioServicioImp implements IUsuarioService {
 	IUsuarioRepository iUsuario;
 	
 	@Override
-	public void guardar(Usuario unUsuario) {
+	public void guardar(Usuario usuario) {
 		// TODO Auto-generated method stub
-		iUsuario.save(unUsuario);
+		String pw = usuario.getPassword();
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
+		usuario.setPassword(bCryptPasswordEncoder.encode(pw));
+		iUsuario.save(usuario);
 	}
 
 	@Override

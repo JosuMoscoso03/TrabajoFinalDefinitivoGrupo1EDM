@@ -23,9 +23,4 @@ public class AplicacionController {
 		return "registrador";
 	}
 	
-	@GetMapping({"/usuarioBDr"})
-	public String obtenerBD(Model model) {
-		return "usuarioBD";
-	}
-	
 }
