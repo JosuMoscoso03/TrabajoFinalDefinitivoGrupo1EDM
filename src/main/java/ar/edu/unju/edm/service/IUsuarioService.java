@@ -12,8 +12,8 @@ public interface IUsuarioService {
 
 		public void guardar( Usuario unUsuario );
 		public Iterable<Usuario> listarUsuario();
-		public void eliminar();
-		public Usuario modificar();
-		public Optional<Usuario> encontrarUsuario(Long idusuario);
+		public void eliminar(Long id);
+		public Usuario modificar(Usuario unUsuario) throws Exception ;
+		public Optional<Usuario> encontrarUsuario(Long id) ;
 	
 }
