@@ -14,6 +14,6 @@ public interface IUsuarioService {
 		public Iterable<Usuario> listarUsuario();
 		public void eliminar();
 		public Usuario modificar();
-		public Optional<Usuario> encontrarUsuario(Long idusuario);
+		public Optional<Usuario> encontrarUsuario(String nombreUsuario);
 	
 }
