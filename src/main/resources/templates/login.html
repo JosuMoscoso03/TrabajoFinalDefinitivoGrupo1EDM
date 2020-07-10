@@ -3,51 +3,45 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <head>
 <meta charset="ISO-8859-1">
-<title>Login usuario</title>
+<title>Bienvenido</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 	crossorigin="anonymous">
 </head>
+<body>
+	<div th:insert="layout/header :: header"></div>
+	<div class="container">
+		<br> <br> <br>
 
-<body class="container">
-<div th:insert="layout/header :: header"></div>
-	<h1>INICIAR SESIÓN</h1>
-	<div class="card">
-		<div class="card-header">
-			<h3>Ingrese sus datos</h3>
-		</div>
-		<div class="card-body">
-			<form class="form" th:object=${usuario} th:action="@{/login}" method="post">
+
+		<h1>LOGIN DE USUARIO</h1>
+		<br> <br>
+		<form class="form" th:object=${usuario} th:action="@{/login}" method="post">
 			<div class="form-group row">
-				<label for="idLoginUsuario" class="col-sm-3 col-form-label">Nombre de
+				<label for="nombreUsuario" class="col-sm-3 col-form-label">Ingresar
 					Usuario</label>
 				<div class="col-sm-9">
-					<input class="form-control" type="text" id="idLoginUsuario"
+					<input class="form-control" type="text" id="nombreUsuario"
 						placeholder="Nombre de usuario" name="nombreUsuario" required>
 				</div>
 			</div>
 			<div class="form-group row">
 				<label for="contraseña" class="col-sm-3 col-form-label">Contraseña</label>
 				<div class="col-sm-9">
-					<input type="password" class="form-control" id="idLoginPassword"
+					<input type="password" class="form-control" id="password"
 						placeholder="Contraseña" name="password" required>
 				</div>
 			</div>
 			<br>
 			<button type="submit" class="btn btn-primary">Ingresar</button>
 			<div class="alert-danger text-center" th:if="${formLoginErrorMessage}" th:text="${formLoginErrorMesage}">Name Error</div>
-			<br>
-		</form>
-		</div>
-	</div>
-	
-	<div th:if="${param.error}" class="alert alert-danger" role="alert">Combinacion Invalida de Usuario y Contraseña</div>
+			<div th:if="${param.error}" class="alert alert-danger" role="alert">Combinacion Invalida de Usuario y Contraseña</div>
 		<div th:if="${param.logout}" class="alert alert-success" role="alert">Ha salido del Sistema.</div>
+			<br> <br> <br> <br> <br>
+		</form>
+		
 	</div>
 	<div th:insert="layout/footer :: footer"></div>
-
-
-
 </body>
 </html>

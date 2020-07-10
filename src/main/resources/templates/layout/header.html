@@ -1,0 +1,42 @@
+<!--Main Navigation-->
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+
+<header style="background-color: #20B2AA;">
+
+	<nav class="navbar fixed-top navbar-expand-lg scrolling-navbar"
+		style="background-color: #20B2AA;">
+		<a class="navbar-brand text-dark" href="#"><strong>REGISTRO
+				DE PERSONAS</strong></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link text-white"
+					href="login">Home <span class="sr-only">(current)</span></a></li>
+				<li class="nav-item"><a class="nav-link text-white" href="#">Usuarios</a>
+				</li>
+				<li class="nav-item"><a class="nav-link text-white" href="#">Personas</a>
+				</li>
+			</ul>
+
+			<form class="form-inline my-2 my-lg-0">
+				<ul class="navbar-nav mt-2 mt-lg-0">
+					<li class="nav-item"><a
+						class="btn btn-outline-white my-2 my-sm-0 form-control text-white " style="background-color: #4682B4;" href="/" 
+						th:href="@{/logout}"> <span> Salir </span> <!-- <span class="float-right">
+				<i class="fas fa-sign-out-alt"></i>
+				</span>  -->
+					</a></li>
+				</ul>
+			</form>
+
+		</div>
+	</nav>
+
+</header>
+</html>
+<!--Main Navigation-->
