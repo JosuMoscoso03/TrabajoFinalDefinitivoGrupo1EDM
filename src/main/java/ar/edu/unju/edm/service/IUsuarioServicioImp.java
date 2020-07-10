@@ -35,10 +35,10 @@ public class IUsuarioServicioImp implements IUsuarioService {
 
 	
 	@Override
-	public Optional<Usuario> encontrarUsuario(Long idusuario) {
+	public Optional<Usuario> encontrarUsuario (String nombreUsuario) {
 		// TODO Auto-generated method stub
-		Optional<Usuario> UsuarioEncontrado = iUsuario.findById(idusuario);
-		return UsuarioEncontrado;
+		Optional<Usuario> usuarioEncontrado = iUsuario.findByNombreUsuario(nombreUsuario);
+		return usuarioEncontrado;
 	}
 
 	@Override
