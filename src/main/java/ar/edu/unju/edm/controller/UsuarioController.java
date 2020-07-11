@@ -22,13 +22,13 @@ public class UsuarioController {
 		model.addAttribute("usuarioF",new Usuario());
 		return "Fusuario";
 	}
+	
 	@PostMapping("/guardarUsuario")
 	public String guardarU(@ModelAttribute Usuario usuario, Model model) {
 		usuarioService.guardar(usuario);
 		model.addAttribute("usuarioF", usuario);
 		return "redirect:/cargarUsuario";
 	} 
-
 	
 	@GetMapping("/Lusuarios")
 	public String mostrarUsuarios(Model model){
