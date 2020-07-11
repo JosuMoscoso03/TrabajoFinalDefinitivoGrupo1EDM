@@ -1,46 +1,33 @@
 package ar.edu.unju.edm.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ar.edu.unju.edm.model.Barrio;
 import ar.edu.unju.edm.repository.IBarrioRepository;
 
-public class IBarrioServiceImp implements IBarrioService {
+@Service
+public class IBarrioServiceImp implements IBarrioService{
+
 	@Autowired
-	IBarrioRepository ibarrio;
+	IBarrioRepository iBarrio;
+	private Barrio barrioAuxiliar = new Barrio();
 	
 	@Override
-	public void guardar(Barrio unBarrio) {
-		// TODO Auto-generated method stub
-		ibarrio.save(unBarrio);
+	public List<Barrio> obtenerBarrios() {
+		return iBarrio.obtenerBarrios();
 	}
 
 	@Override
-	public Iterable<Barrio> ListarBarrios() {
-		// TODO Auto-generated method stub
-		return ibarrio.findAll();
+	public void guardar(Barrio barrio) {
+		iBarrio.save(barrio);
 	}
 
 	@Override
-	public void eliminar() {
-		// TODO Auto-generated method stub
-		
+	public Barrio obtenerBarrio(List<Barrio> barrio) {
+		return barrioAuxiliar;
 	}
-
-	@Override
-	public Barrio modificar() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<Barrio> encontrarUsuario(Long idBarrio) {
-		// TODO Auto-generated method stub
-		Optional<Barrio> BarrioEncontrado = ibarrio.findById(idBarrio);
-		return BarrioEncontrado;
-	}
-
 
 }
