@@ -38,10 +38,13 @@ public class RegistroTracking implements Serializable{
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	LocalDateTime fechaHora;
 	@ManyToOne 
-	@JoinColumn (name = "localidadid")
+	@JoinColumn (name = "idlocalidad")
 	Barrio localidad;
 	@Column
 	String detalleLugarRegistro;
+	
+	//@OneToMany(mappedBy = "registro")
+	//private List<ValidarCondicionSanitaria> registrostracking = new ArrayList<RegistroTracking>();
 	
 	public RegistroTracking() {
 		super();

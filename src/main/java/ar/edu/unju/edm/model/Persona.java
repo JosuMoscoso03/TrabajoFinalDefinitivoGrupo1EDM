@@ -1,12 +1,15 @@
 package ar.edu.unju.edm.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
@@ -33,6 +36,9 @@ public class Persona implements Serializable {
 	String nombres;
 	@Column
 	String nacionalidad;
+	
+	@OneToMany(mappedBy = "persona")
+	private List<ValidarCondicionSanitaria> condicionesanitarias = new ArrayList<ValidarCondicionSanitaria>();
 	public Persona() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -76,11 +82,10 @@ public class Persona implements Serializable {
 	public void setNacionalidad(String nacionalidad) {
 		this.nacionalidad = nacionalidad;
 	}
-	
 	@Override
 	public String toString() {
-		return "Persona [documento=" + documento + ", apellido=" + apellido + ", nombres=" + nombres + ", nacionalidad="
-				+ nacionalidad + "]";
+		return "Persona [id=" + id + ", documento=" + documento + ", apellido=" + apellido + ", nombres=" + nombres
+				+ ", nacionalidad=" + nacionalidad + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -88,6 +93,7 @@ public class Persona implements Serializable {
 		int result = 1;
 		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
 		result = prime * result + ((documento == null) ? 0 : documento.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nacionalidad == null) ? 0 : nacionalidad.hashCode());
 		result = prime * result + ((nombres == null) ? 0 : nombres.hashCode());
 		return result;
@@ -111,6 +117,11 @@ public class Persona implements Serializable {
 				return false;
 		} else if (!documento.equals(other.documento))
 			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
 		if (nacionalidad == null) {
 			if (other.nacionalidad != null)
 				return false;
@@ -123,6 +134,5 @@ public class Persona implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 }
