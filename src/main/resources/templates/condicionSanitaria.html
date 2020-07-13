@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Condicion Sanitaria</title>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+
+</head>
+<body>
+
+<div th:insert="layout/header :: header"></div>
+
+	<div class="container">
+		<br> <br> <br>
+		
+		<div class="card col-md-6 mx-auto">
+			<div class="card-body">
+				<div style="background-color: #20B2AA;">
+
+					<h4 class="p-2 mb-2 text-black card-title">CONDICION SANITARIA</h4>
+				</div>
+				<form th:action="@{/save}" th:object=${ValidarCondicionSanitaria}
+					method="POST">
+					<fieldset class="form-group">
+						<div class="row">
+							<legend class="col-form-label col-sm-4 pt-0">Usa
+								tapaboca:</legend>
+							<div class="col-sm-8">
+								<div class="form-check">
+									<input th:field="*{ValidarCondicionSanitaria.usaTapaBoca}"
+										class="form-check-input" type="radio" name="usaTapaboca"
+										id="usaTapaboca" value=true checked> <label
+										class="form-check-label" for="gridRadios1">Sí</label>
+								</div>
+								<div class="form-check">
+									<input th:field="*{ValidarCondicionSanitaria.usaTapaBoca}"
+										class="form-check-input" type="radio" name="usaTapaboca"
+										id="usaTapaboca" value=false> <label
+										class="form-check-label" for="gridRadios2">No</label>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset class="form-group">
+						<div class="row">
+							<legend class="col-form-label col-sm-4 pt-0">Cumple Terminación del DNI:</legend>
+							<div class="col-sm-8">
+								<div class="form-check">
+									<input
+										th:field="*{ValidarCondicionSanitaria.cumpleTerminacionDNI}"
+										class="form-check-input" type="radio" name="terminacionDni"
+										id="terminacionDni" value=true checked> <label
+										class="form-check-label" for="gridRadios1">Sí</label>
+								</div>
+								<div class="form-check">
+									<input
+										th:field="*{ValidarCondicionSanitaria.cumpleTerminacionDNI}"
+										class="form-check-input" type="radio" name="terminacionDni"
+										id="terminacionDni" value=false> <label
+										class="form-check-label" for="gridRadios2">No</label>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset class="form-group">
+						<div class="row">
+							<legend class="col-form-label col-sm-4 pt-0">Posee permiso de circulación:</legend>
+							<div class="col-sm-8">
+								<div class="form-check">
+									<input
+										th:field="*{ValidarCondicionSanitaria.poseePermisoCirculacion}"
+										class="form-check-input" type="radio" name="permisoCirculacion"
+										id="permisoCirculacion" value=true checked> <label
+										class="form-check-label" for="gridRadios1">Sí</label>
+								</div>
+								<div class="form-check">
+									<input
+										th:field="*{ValidarCondicionSanitaria.poseePermisoCirculacion}"
+										class="form-check-input" type="radio" name="permisoCirculacion"
+										id="permisoCirculacion" value=false> <label
+										class="form-check-label" for="gridRadios2">No</label>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset class="form-group">
+						<div class="row">
+							<legend class="col-form-label col-sm-4 pt-0">Va acompañado/a:</legend>
+							<div class="col-sm-8">
+								<div class="form-check">
+									<input th:field="*{ValidarCondicionSanitaria.estaAcompañado}"
+										class="form-check-input" type="radio" name="estaAcompanado"
+										id="estaAcompanado" value=true checked> <label
+										class="form-check-label" for="gridRadios1">Sí</label>
+								</div>
+								<div class="form-check">
+									<input th:field="*{usuarioForm.estaAcompañado}"
+										class="form-check-input" type="radio" name="estaAcompanado"
+										id="estaAcompanado" value=false> <label
+										class="form-check-label" for="gridRadios2">No</label>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+
+					<button type="submit" class="btn btn-primary">Agregar</button>
+					<a class="btn btn-danger text-white" th:href="@{agregarCondicionSanitaria/cancelar}">Cancelar</a>
+
+				</form>
+			</div>
+		</div>
+		<br> <br> <br>
+	</div>
+
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+		crossorigin="anonymous"></script>
+
+	<div th:insert="layout/footer :: footer"></div>
+	
+</body>
+</html>
