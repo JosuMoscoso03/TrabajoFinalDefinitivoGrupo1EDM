@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Consulta</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+	integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<div th:insert="layout/header :: header"></div>
+
+	<div class="container">
+		<br> <br> <br>
+		<div class="card">
+			<div>
+				<div class="card-body">
+					<div style="background-color: #20B2AA;">
+						<h6 class="p-2 mb-2 text-black card-title">LISTADO DEL RECORRIDO DE UNA PERSONA</h6>
+					</div>
+					<form class="form" role="form" th:object="${consulta}"
+						th:action="@{/buscarDoc}" method="post">
+						
+							<div class="form-group">
+								<label for="documento">Nro. de documento</label> <input
+									class="form-control" id="doc"
+									th:field="${Persona.doc}"
+									placeholder="Ingresar numero de documento"></input>
+							</div>
+							<input type="submit" class="btn btn-primary"
+								value="Buscar">
+					</form>
+				</div>
+			</div>
+		</div> <br>
+		
+		<div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col"># Registro</th>
+                                <th scope="col">Fecha y Hora</th>
+                                <th scope="col">Documento</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Barrio</th>
+                                <th scope="col">Detalles del lugar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="registroTrackingR : ${registroTrackingR}">
+                                <td th:text="${registroTracking.registroId}"></td>
+                                <td th:text="${registroTracking.fechaHora}"></td>
+                                <td th:text="${registroTracking.validadores.persona.doc}"></td>
+                                <td th:text="${registroTracking.validadores.persona.nombre}"></td>
+                                <td th:text="${registroTracking.validadores.persona.apellido}"></td>
+                                <td th:text="${registroTracking.barrio.localidad}"></td>
+                                <td th:text="${registroTracking.detalleLugarRegistro}"></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+		<br> <br> <br>
+	</div>
+
+
+
+
+	<div th:insert="layout/footer :: footer"></div>
+</body>
+</html>
