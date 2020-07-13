@@ -1,16 +1,16 @@
 package ar.edu.unju.edm.service;
 
-import java.util.Optional;
-
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unju.edm.model.ValidarCondicionSanitaria;
 
 @Service
 public interface ICondicionService {
+	
 	public void guardar(ValidarCondicionSanitaria condicion);
-	public Iterable <ValidarCondicionSanitaria > MostarCondiciones();
-	public void eliminar();
-	public ValidarCondicionSanitaria modificar();
-	public Optional<ValidarCondicionSanitaria > encontrarValidacion(Long codValidacion);
+	public List <ValidarCondicionSanitaria > MostarCondiciones();
+	public void eliminar(Long id);
+	public ValidarCondicionSanitaria modificar(ValidarCondicionSanitaria condicion) throws Exception;
+	public ValidarCondicionSanitaria encontrarValidacion(Long id) throws Exception;
 }
