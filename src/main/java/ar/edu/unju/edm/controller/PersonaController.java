@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,48 +25,48 @@ public class PersonaController {
 	
 	@GetMapping("/cargarPersona")
 	public String agregarP(Model model) {
-		model.addAttribute("Personaf", new Persona());
+		model.addAttribute("personaF", new Persona());
 		return "Fpersona";
 	}
 	
 	@PostMapping("/guardarPersona")
 	public String guardarP(@ModelAttribute Persona persona, Model model) {
 		personaService.guardar(persona);
-		model.addAttribute("Personaf", new Persona());
+		model.addAttribute("personaF", new Persona());
 		return "redirect:/cargarPersona"; 
 	}
 	//Listar usuarios
 	@GetMapping("/Lpersonas")
 	public String mostrarPersonas(Model model){
-		model.addAttribute ("persona",personaService.listarPersona());
-		return "personas";	
+		model.addAttribute ("personas",personaService.listarPersona());
+		return "Vpersonas";	
 	}	
 	
 	//modificar persona	 
-	@GetMapping("/editarPersona/{id}")
-	public String EditarPersona(Model model,@ModelAttribute Persona persona){
-		Optional<Persona> personaEncontrada = personaService.encontrarPersona(persona.getNombres());
-		model.addAttribute("personaD", personaEncontrada);
+	@GetMapping("/EDpersona/{id}")
+	public String EditarPersona(Model model,@PathVariable(name="id") Long id) throws Exception{
+		Persona personaEncontrada = personaService.encontrarPersona(id);
+		model.addAttribute("personaF", personaEncontrada);
 		model.addAttribute("editMode","true");
 		return "Fpersona";
 	}
 	
-	@PostMapping("/editarPersona")
-	public String postEditarPersona( @ModelAttribute("personaD") Persona persona, BindingResult result, ModelMap model) {
+	@PostMapping("/Mpersona")
+	public String postEditarPersona( @ModelAttribute("personaF") Persona persona, BindingResult result, ModelMap model) {
 		if(result.hasErrors()) {			
-			model.addAttribute("personaD", persona);
+			model.addAttribute("personaF", persona);
 			model.addAttribute("editMode", "true");
 		}else {
 			try {
 				System.out.println(persona.getId());
 
-				personaService.modificar();
-				model.addAttribute("usuarioD", persona);
+				personaService.modificar(persona);
+				model.addAttribute("personaF", persona);
 				model.addAttribute("editMode", "false");
 			} catch (Exception e) {
 
 				model.addAttribute("formPersonaErrorMessage", e.getMessage());
-				model.addAttribute("userForm", persona);
+				model.addAttribute("personaForm", persona);
 				model.addAttribute("editMode", "true");
 			}
 		}
@@ -75,29 +76,15 @@ public class PersonaController {
 	}
 	
 	//eliminar persona
-	@GetMapping("/eliminarPersona/{id}")
-	public String eliminarP(Model model,@ModelAttribute Persona persona ) {
-		try {
-			personaService.eliminar(persona);
-			
-		}catch(Exception e) {
-			model.addAttribute("listErrorMessage", e.getMessage());
+	@GetMapping("/Elpersona/{id}")
+	public String eliminar(@PathVariable Long id, Model model) {
+			personaService.eliminar(id);
+			return "redirect:/Lpersonas";
 		}
-		
-		return mostrarPersonas(model);
-		
-	}	
-
-	@GetMapping("/encontrarPersona/{id}")
-	public String EncontrarUsuario(Model model, @ModelAttribute Persona persona) {
-		Optional<Persona> personaEncontrada = personaService.encontrarPersona(persona.getApellido());
-		model.addAttribute("personaD", personaEncontrada);
-		model.addAttribute("editMode","true");
-		return "Fpersona";
-	}
+			
 	
 	@GetMapping("/cancelarPersona")
 	public String cancelarEditarPersona(ModelMap model) {
-		return "redirect:/personas";	
+		return "redirect:/Vpersonas";	
 	}
 }

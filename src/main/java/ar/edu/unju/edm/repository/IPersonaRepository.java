@@ -1,5 +1,6 @@
 package ar.edu.unju.edm.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,7 @@ import ar.edu.unju.edm.model.Persona;
 @Repository
 public interface IPersonaRepository extends JpaRepository <Persona,Long>{
 	@Query("from Persona e order by e.id")
-	public Optional <Persona> findByApellidoPersona(String apellidoPersona);
+	public List<Persona> listarPersonas();
+	//public Optional <Persona> findByApellidoPersona(String apellidoPersona);
 
 }

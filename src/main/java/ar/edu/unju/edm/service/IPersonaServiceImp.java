@@ -2,6 +2,7 @@ package ar.edu.unju.edm.service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +16,19 @@ public class IPersonaServiceImp implements IPersonaService {
 	
 	@Autowired
 	IPersonaRepository ipersona;
-	private ArrayList <Persona> aux = new ArrayList<Persona>();
-	private Iterator <Persona> listadoP = aux.iterator();
+	private List <Persona> aux = new ArrayList<>();
 	@Override
 	public void guardar(Persona unaPersona) {
 		// TODO Auto-generated method stub
 		ipersona.save (unaPersona);
-		aux.add(unaPersona);
 	}
 	@Override
-	public Optional<Persona> encontrarPersona(String apellidoPersona) {
+	public Persona encontrarPersona(Long id) throws Exception {
 		// TODO Auto-generated method stub
-		Optional<Persona> PersonaEncontrada = ipersona.findByApellidoPersona(apellidoPersona);
-		return PersonaEncontrada;
+		return ipersona.findById(id).orElseThrow(() -> new Exception("Error"));
+
 	}
+	
 	/*
 	 * 
 	 
@@ -44,28 +44,30 @@ public class IPersonaServiceImp implements IPersonaService {
 	
 	**/
 	@Override
-	public Iterable<Persona> listarPersona() {
-		// TODO Auto-generated method stub
-		return ipersona.findAll();
+	public List<Persona> listarPersona() {
+		return ipersona.listarPersonas();
 	}
 
 	@Override
-	public void eliminar(Persona unaPersona) {
-		// TODO Auto-generated method stub
-		while(listadoP.hasNext()) {
-			Persona persona = listadoP.next();
-			if(persona.equals(unaPersona)) {
-				listadoP.remove();
-			}
-		}
+	public void eliminar(Long id) {
+		ipersona.deleteById(id);
 	}
 
 	@Override
-	public Persona modificar() {
-		// TODO Auto-generated method stub
-		return null;
+	public Persona modificar(Persona unaPersona) throws Exception {
+		Persona personaB = encontrarPersona(unaPersona.getId());
+		mapearPersona(unaPersona, personaB);
+		return ipersona.save(personaB);
 	}
 
-	
-
+	public void mapearPersona(Persona desde, Persona hacia) {
+		hacia.setNombres(desde.getNombres());
+		hacia.setApellido(desde.getApellido());
+		hacia.setDocumento(desde.getDocumento());
+		hacia.setNacionalidad(desde.getNacionalidad());
+	}
+	@Override
+	public List<Persona> obtenerPersonas() {
+		return aux;
+	}
 }
