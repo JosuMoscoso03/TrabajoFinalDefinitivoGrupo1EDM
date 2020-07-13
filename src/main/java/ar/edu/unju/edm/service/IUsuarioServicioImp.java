@@ -1,7 +1,7 @@
 package ar.edu.unju.edm.service;
 
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +15,7 @@ import ar.edu.unju.edm.repository.IUsuarioRepository;
 public class IUsuarioServicioImp implements IUsuarioService {
 	@Autowired
 	IUsuarioRepository iUsuario;
-	
+
 	@Override
 	public void guardar(Usuario usuario) {
 		// TODO Auto-generated method stub
@@ -26,31 +26,37 @@ public class IUsuarioServicioImp implements IUsuarioService {
 	}
 
 	@Override
-	public void eliminar() {
+	public void eliminar(Long id) {
 		// TODO Auto-generated method stub
-		
+		iUsuario.deleteById(id);
 	}
 
 	@Override
-	public Usuario modificar() {
-		// TODO Auto-generated method stub
-		return null;
+	public Usuario modificar(Usuario unUsuario) throws Exception {
+		Usuario usuarioB = encontrarUsuario(unUsuario.getId());
+		mapearUsuario(unUsuario, usuarioB);
+		return iUsuario.save(usuarioB);
 	}
 
-	
-	@Override
-	public Optional<Usuario> encontrarUsuario (String nombreUsuario) {
-		// TODO Auto-generated method stub
-		Optional<Usuario> usuarioEncontrado = iUsuario.findByNombreUsuario(nombreUsuario);
-		return usuarioEncontrado;
+	public void mapearUsuario(Usuario desde, Usuario hacia) {
+		hacia.setNombreReal(desde.getNombreReal());
+		hacia.setApellidoReal(desde.getApellidoReal());
+		hacia.setNombreUsuario(desde.getNombreUsuario());
+		// hacia.setPassword(desde.getPassword());
+		hacia.setTipoUsuario(desde.getTipoUsuario());
 	}
 
 	@Override
-	public Iterable<Usuario> listarUsuario() {
+	public Usuario encontrarUsuario(Long id) throws Exception {
 		// TODO Auto-generated method stub
-		return iUsuario.findAll();
+		return iUsuario.findById(id).orElseThrow(() -> new Exception("Error"));
+
 	}
-	
-	
+
+	@Override
+	public List<Usuario> listarUsuario() {
+		// TODO Auto-generated method stub
+		return iUsuario.listarUsuarios();
+	}
 
 }
