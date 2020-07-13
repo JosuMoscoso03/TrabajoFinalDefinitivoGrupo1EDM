@@ -74,11 +74,11 @@
 						<h4 class="p-2 mb-2 text-black card-title">BARRIO</h4>
 					</div>
 					<h6>Seleccione el barrio</h6>
-					<select class="form-control"
-						th:field="${registroTrackingD.localidad.idLocalidad}">
-						<option th:each="localidad:${localidades}"
-							th:value="${localidad.idLocalidad}" th:text="${localidad.nombre}"></option>
-					</select> <br>
+						<select class="form-control"
+							th:field="${registroTracking.barrio.idBarrio}">
+							<option th:each="barrio:${barrios}" th:value="${barrio.idBarrio}"
+								th:text="${barrio.nombre}"></option>
+						</select> <br>
 					<div class="form-group">
 						<label for="exampleFormControlTextarea1">Detalle del lugar</label>
 						<textarea th:field="*{RegistroTracking.detalleLugarRegistro}"
