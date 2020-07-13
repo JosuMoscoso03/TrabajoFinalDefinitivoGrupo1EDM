@@ -25,45 +25,38 @@
 
 		<div class="card">
 			<div class="card-body">
-				<div style="background-color: #20B2AA;">
-					<h5 class="p-2 mb-2 text-black card-title">PERSONA</h5>
+				<h5 class="p-2 mb-2 text-black card-title">PERSONAS</h5>
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead class="thead-light">
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Documento</th>
+								<th scope="col">Nombres</th>
+								<th scope="col">Apellido</th>
+								<th scope="col">Nacionalidad</th>
+								<th scope="col">COMPLETAR</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="Persona: ${persona}">
+								<td th:text="${Persona.idPersona}"></td>
+								<td th:text="${Persona.documento}"></td>
+								<td th:text="${Persona.nombres}"></td>
+								<td th:text="${Persona.apellido}"></td>
+								<td th:text="${Persona.nacionalidad}"></td>
+								<td><a class="btn btn-warning" href="#"
+									th:href="@{'/AgCondicionSanitaria/'+${Persona.idPersona}}">AGREGAR
+										CONDICION SANITARIA</a></td>
+							</tr>
+
+						</tbody>
+					</table>
 				</div>
-				<form id="datosPersona" th:object="${Persona}">
-					<div class="form-row">
-						<div class="col-md-6 form-group">
-							<label>Nombre</label>
-							<p class=" p-2 mb-2 bg-light text-dark">
-								<label th:text="${Persona.nombre}"></label>
-							</p>
-						</div>
-						<div class="col-md-6 form-group">
-							<label>Apellido</label>
-							<p class=" p-2 mb-2 bg-light text-dark">
-								<label th:text="${Persona.apellido}"></label>
-							</p>
-						</div>
-						<div class="col-md-6 form-group">
-							<label>Documento</label>
-							<p class=" p-2 mb-2 bg-light text-dark">
-								<label th:text="${Persona.doc}"></label>
-							</p>
-						</div>
-						<div class="col-md-6 form-group">
-							<label>Nacionalidad</label>
-							<p class=" p-2 mb-2 bg-light text-dark">
-								<label th:text="${Persona.nacionalidad}"></label>
-							</p>
-						</div>
-					</div>
-				</form>
 			</div>
 		</div>
 
-		<br>
-
-		<h6>Complete los datos de la condicion sanitaria de la persona.</h6>
-		<a th:href="@{/condicionSanitaria}" class="btn btn-primary text-white">Condicion
-			Sanitaria</a> <br> <br> <br>
+		<br> <br> <br>
 
 		<form th:action="@{/save}" th:object=${ValidarCondicionSanitaria}
 			method="POST">
@@ -74,11 +67,11 @@
 						<h4 class="p-2 mb-2 text-black card-title">BARRIO</h4>
 					</div>
 					<h6>Seleccione el barrio</h6>
-						<select class="form-control"
-							th:field="${registroTracking.barrio.idBarrio}">
-							<option th:each="barrio:${barrios}" th:value="${barrio.idBarrio}"
-								th:text="${barrio.nombre}"></option>
-						</select> <br>
+					<select class="form-control"
+						th:field="${registroTracking.barrio.idBarrio}">
+						<option th:each="barrio:${barrios}" th:value="${barrio.idBarrio}"
+							th:text="${barrio.nombre}"></option>
+					</select> <br>
 					<div class="form-group">
 						<label for="exampleFormControlTextarea1">Detalle del lugar</label>
 						<textarea th:field="*{RegistroTracking.detalleLugarRegistro}"
