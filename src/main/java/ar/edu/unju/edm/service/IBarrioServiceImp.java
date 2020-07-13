@@ -13,11 +13,10 @@ public class IBarrioServiceImp implements IBarrioService{
 
 	@Autowired
 	IBarrioRepository iBarrio;
-	private Barrio barrioAuxiliar = new Barrio();
 	
 	@Override
-	public List<Barrio> obtenerBarrios() {
-		return iBarrio.obtenerBarrios();
+	public List<Barrio> listarBarrio() {
+		return iBarrio.listarBarrios();
 	}
 
 	@Override
@@ -26,8 +25,29 @@ public class IBarrioServiceImp implements IBarrioService{
 	}
 
 	@Override
-	public Barrio obtenerBarrio(List<Barrio> barrio) {
-		return barrioAuxiliar;
+	public void eliminar(Long id){
+		iBarrio.deleteById(id);
+	}
+	
+	@Override
+	public Barrio modificar(Barrio unBarrio) throws Exception {
+		Barrio barrioB = encontrarBarrio(unBarrio.id);
+		mapearBarrio(unBarrio, barrioB);
+		return iBarrio.save(barrioB);
 	}
 
+	public void mapearBarrio(Barrio desde, Barrio hacia) {
+		hacia.setBarrio(desde.getBarrio());
+	}
+
+	@Override
+	public Barrio encontrarBarrio(Long id) throws Exception {
+		// TODO Auto-generated method stub
+		return iBarrio.findById(id).orElseThrow(() -> new Exception("Error"));
+	}
+	
+	@Override
+	public Long devolverIdBarrio (Barrio Barrio) {
+		return Barrio.getId();
+	}
 }

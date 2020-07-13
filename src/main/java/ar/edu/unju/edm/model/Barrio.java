@@ -27,7 +27,7 @@ public class Barrio implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO,generator="native")
 	@GenericGenerator(name="native", strategy="native")
-	private Long id;
+	public Long id;
 	
 	@Column
 	String barrio;
@@ -38,37 +38,45 @@ public class Barrio implements Serializable{
 	public Barrio() {
 		
 	}
-	
-	public Barrio(Long id, String barrio) {
-		super();
-		this.id = id;
-		this.barrio = barrio;
-	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getBarrio() {
 		return barrio;
 	}
+
 	public void setBarrio(String barrio) {
 		this.barrio = barrio;
 	}
-	
+
+	public Barrio(Long id, String barrio, List<RegistroTracking> registrostracking) {
+		super();
+		this.id = id;
+		this.barrio = barrio;
+		this.registrostracking = registrostracking;
+	}
+
 	@Override
 	public String toString() {
-		return "Barrio [barrio=" + barrio + "]";
+		return "Barrio [id=" + id + ", barrio=" + barrio + ", registrostracking=" + registrostracking + "]";
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((barrio == null) ? 0 : barrio.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((registrostracking == null) ? 0 : registrostracking.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -87,6 +95,11 @@ public class Barrio implements Serializable{
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (registrostracking == null) {
+			if (other.registrostracking != null)
+				return false;
+		} else if (!registrostracking.equals(other.registrostracking))
 			return false;
 		return true;
 	}

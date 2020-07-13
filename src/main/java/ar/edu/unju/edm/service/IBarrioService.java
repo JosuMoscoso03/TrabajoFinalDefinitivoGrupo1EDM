@@ -10,7 +10,10 @@ import ar.edu.unju.edm.model.Barrio;
 public interface IBarrioService {
 	
 	public void guardar(Barrio barrio);
-	public List<Barrio> obtenerBarrios();
-	public Barrio obtenerBarrio(List<Barrio> localidad);
+	public List<Barrio> listarBarrio();
+	public Barrio encontrarBarrio(Long id) throws Exception;
+	public Barrio modificar(Barrio unBarrio) throws Exception;
+	public void eliminar(Long id);
+	public Long devolverIdBarrio (Barrio Barrio);
 
 }

@@ -13,5 +13,5 @@ import ar.edu.unju.edm.model.Barrio;
 public interface IBarrioRepository extends JpaRepository<Barrio,Long>{
 
 	@Query("from Barrio e order by e.id")
-	public List<Barrio> obtenerBarrios();
+	public List<Barrio> listarBarrios();
 }
