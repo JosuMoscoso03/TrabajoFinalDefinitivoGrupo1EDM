@@ -49,7 +49,7 @@ public class AutenticacionSuccessHandler implements AuthenticationSuccessHandler
 				redirectStrategy.sendRedirect(request, response, "/consultor");
 			}else {
 				if(tipoBD) {
-					redirectStrategy.sendRedirect(request, response, "/usuarioBD");
+					redirectStrategy.sendRedirect(request, response, "/cargarUsuario");
 				}else {
 					throw new IllegalStateException();
 				}
