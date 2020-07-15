@@ -23,16 +23,18 @@
 
 					<h4 class="p-2 mb-2 text-black card-title">CONDICION SANITARIA</h4>
 				</div>
-				<form form autocomplete="off" th:action="${editMode}?@{/editarCondicion}:@{/guardarCondicion}" th:object=${ValidarCondicionSanitaria} method="POST">
+				<form th:action="@{/guardarCondicion}" th:object=${validarF}
+					method="POST">
 					<fieldset class="form-group">
 						<div class="row">
-							<legend class="col-form-label col-sm-4 pt-0">Usa tapaboca:</legend>
+							<legend class="col-form-label col-sm-4 pt-0">Usa
+								tapaboca:</legend>
 							<div class="col-sm-8">
 								<div class="form-check">
 									<input th:field="*{usaTapaBoca}"
 										class="form-check-input" type="radio" name="usaTapaboca"
-										id="usaTapaboca" value=true> <label
-										class="form-check-label" for="usaTapaboca">Si</label>
+										id="usaTapaboca" value=true checked> 
+										<labe class="form-check-label" for="usaTapaboca">Sí</label>
 								</div>
 								<div class="form-check">
 									<input th:field="*{usaTapaBoca}"
@@ -45,35 +47,35 @@
 					</fieldset>
 					<fieldset class="form-group">
 						<div class="row">
-							<legend class="col-form-label col-sm-4 pt-0">Cumple Terminacion del DNI:</legend>
+							<legend class="col-form-label col-sm-4 pt-0">Cumple Terminación del DNI:</legend>
 							<div class="col-sm-8">
 								<div class="form-check">
 									<input
 										th:field="*{cumpleTerminacionDNI}"
 										class="form-check-input" type="radio" name="terminacionDni"
 										id="terminacionDni" value=true checked> <label
-										class="form-check-label" for="terminacioniDni">Si</label>
+										class="form-check-label" for="terminacionDni">Sí</label>
 								</div>
 								<div class="form-check">
 									<input
 										th:field="*{cumpleTerminacionDNI}"
 										class="form-check-input" type="radio" name="terminacionDni"
 										id="terminacionDni" value=false> <label
-										class="form-check-label" for="terminacioniDni">No</label>
+										class="form-check-label" for="terminacionDni">No</label>
 								</div>
 							</div>
 						</div>
 					</fieldset>
 					<fieldset class="form-group">
 						<div class="row">
-							<legend class="col-form-label col-sm-4 pt-0">Posee permiso de circulacion:</legend>
+							<legend class="col-form-label col-sm-4 pt-0">Posee permiso de circulación:</legend>
 							<div class="col-sm-8">
 								<div class="form-check">
 									<input
 										th:field="*{poseePermisoCirculacion}"
 										class="form-check-input" type="radio" name="permisoCirculacion"
 										id="permisoCirculacion" value=true checked> <label
-										class="form-check-label" for="permisoCirculacion">Si</label>
+										class="form-check-label" for="permisoCirculacion">Sí</label>
 								</div>
 								<div class="form-check">
 									<input
@@ -87,13 +89,13 @@
 					</fieldset>
 					<fieldset class="form-group">
 						<div class="row">
-							<legend class="col-form-label col-sm-4 pt-0">Va acompanado/a:</legend>
+							<legend class="col-form-label col-sm-4 pt-0">Va acompañado/a:</legend>
 							<div class="col-sm-8">
 								<div class="form-check">
 									<input th:field="*{estaAcompanado}"
 										class="form-check-input" type="radio" name="estaAcompanado"
-										id="estaAcompanado" value=true > <label
-										class="form-check-label" for="estaAcompanado">Si</label>
+										id="estaAcompanado" value=true checked> <label
+										class="form-check-label" for="estaAcompanado">Sí</label>
 								</div>
 								<div class="form-check">
 									<input th:field="*{estaAcompanado}"
@@ -106,7 +108,7 @@
 					</fieldset>
 
 					<button type="submit" class="btn btn-primary">Agregar</button>
-					<a class="btn btn-danger text-white" th:href="@{agregarCondicionSanitaria/cancelar}">Cancelar</a>
+					<a class="btn btn-danger text-white" th:href="@{cargarCondicionSanitaria/cancelar}">Cancelar</a>
 
 				</form>
 			</div>

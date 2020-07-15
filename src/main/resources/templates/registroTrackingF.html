@@ -20,78 +20,77 @@
 		<p>Busque y seleccione una persona, de no encontrarla, agreguela.</p>
 		<button type="button" class="btn btn-primary" data-toggle="modal"
 			data-target="#modalBuscarPersona">Buscar Persona</button>
-		<a th:href="@{/nuevoPersona}" class="btn btn-primary text-white">
+		<a th:href="@{/cargarPersona}" class="btn btn-primary text-white">
 			Agregar Persona </a> <br> <br>
+		<form th:action="@{/guardarCondicion}"
+			th:object=${ValidarCondicionSanitaria} method="POST">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="p-2 mb-2 text-black card-title">PERSONAS</h5>
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead class="thead-light">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Documento</th>
+									<th scope="col">Nombres</th>
+									<th scope="col">Apellido</th>
+									<th scope="col">Nacionalidad</th>
+									<th scope="col">COMPLETAR</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="persona:${personas}">
+									<td th:text="${persona.id}"></td>
+									<td th:text="${persona.documento}"></td>
+									<td th:text="${persona.nombres}"></td>
+									<td th:text="${persona.apellido}"></td>
+									<td th:text="${persona.nacionalidad}"></td>
+									<td><a class="btn btn-warning" href="#"
+										th:href="@{'/cargarCondicion/'+${persona.id}}">AGREGAR
+											CONDICION SANITARIA</a></td>
+								</tr>
 
-		<div class="card">
-			<div class="card-body">
-				<h5 class="p-2 mb-2 text-black card-title">PERSONAS</h5>
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead class="thead-light">
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Documento</th>
-								<th scope="col">Nombres</th>
-								<th scope="col">Apellido</th>
-								<th scope="col">Nacionalidad</th>
-								<th scope="col">COMPLETAR</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="Persona: ${persona}">
-								<td th:text="${Persona.idPersona}"></td>
-								<td th:text="${Persona.documento}"></td>
-								<td th:text="${Persona.nombres}"></td>
-								<td th:text="${Persona.apellido}"></td>
-								<td th:text="${Persona.nacionalidad}"></td>
-								<td><a class="btn btn-warning" href="#"
-									th:href="@{'/AgCondicionSanitaria/'+${Persona.idPersona}}">AGREGAR
-										CONDICION SANITARIA</a></td>
-							</tr>
-
-						</tbody>
-					</table>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
-		</div>
-
+		</form>
 		<br> <br> <br>
 
-		<form th:action="@{/save}" th:object=${ValidarCondicionSanitaria}
-			method="POST">
 
+		<form autocomplete="off" id="formRegistro"
+			th:object="${registroTrackingF}" th:action="@{/guardarRegistro}"
+			method="post">
 			<div class="card col-md-12 mx-auto">
 				<div class="card-body">
-					<div style="background-color: #20B2AA;">
+					<div style= "background-color: #20B2AA;">
 						<h4 class="p-2 mb-2 text-black card-title">BARRIO</h4>
 					</div>
 					<h6>Seleccione el barrio</h6>
 					<select class="form-control"
-						th:field="${registroTracking.barrio.idBarrio}">
-						<option th:each="barrio:${barrios}" th:value="${barrio.idBarrio}"
-							th:text="${barrio.nombre}"></option>
+						th:field="${registroTrackingF.barrios.id}">
+						<option th:each="barrios:${barrios}" th:value="${barrios.id}" th:text="${barrios.barrio}"></option>
 					</select> <br>
 					<div class="form-group">
 						<label for="exampleFormControlTextarea1">Detalle del lugar</label>
-						<textarea th:field="*{RegistroTracking.detalleLugarRegistro}"
+						<textarea th:field="${registroTrackingF.detalleLugarRegistro}"
 							class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
 					</div>
 				</div>
 			</div>
 			<br>
-			<button type="submit" class="btn btn-primary">Agregar
-				Registro</button>
-			<a class="btn btn-danger text-white"
-				th:href="@{agregarRegistro/cancelar}">Cancelar</a>
+			<button type="submit" class="btn btn-primary">Agregar Registro</button>
+			<a class="btn btn-danger text-white" th:href="@{guardarRegistro/cancelar}">Cancelar</a>
 		</form>
 		<br> <br> <br> <br>
 
-		<div class="modal fade" id="modalBuscarVehiculo" tabindex="-1"
+		<div class="modal fade" id="modalBuscarPersona" tabindex="-1"
 			role="dialog" aria-labelledby="buscarPersonaModal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-					<form id="personaForm" th:object="${persona}"
+					<form id="personaForm" th:object="${personaF}"
 						th:action="@{/buscarPersona}" method="post">
 						<div class="modal-header">
 							<h5 class="modal-title" id="buscarPersonaModal">Buscar
@@ -104,7 +103,7 @@
 						<div class="modal-body">
 							<div class="form-group">
 								<label for="doc">DNI</label> <input class="form-control"
-									id="dni" th:field="${Persona.doc}"
+									id="dni" th:field="${personaF.documento}"
 									placeholder="Ingresar numero de DNI"></input>
 							</div>
 						</div>
