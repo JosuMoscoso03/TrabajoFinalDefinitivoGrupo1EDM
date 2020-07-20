@@ -30,13 +30,12 @@
 					<div style="background-color: #20B2AA;">
 						<h6 class="p-2 mb-2 text-black card-title">LISTADO DEL RECORRIDO DE UNA PERSONA</h6>
 					</div>
-					<form class="form" role="form" th:object="${consulta}"
-						th:action="@{/buscarDoc}" method="post">
-						
+					<form class="form" role="form" th:object="${persona}"
+						th:action="@{/consultaDos}" method="post">
 							<div class="form-group">
 								<label for="documento">Nro. de documento</label> <input
 									class="form-control" id="doc"
-									th:field="${Persona.doc}"
+									th:field="${persona.documento}"
 									placeholder="Ingresar numero de documento"></input>
 							</div>
 							<input type="submit" class="btn btn-primary"
@@ -50,24 +49,24 @@
                     <table class="table table-striped">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col"># Registro</th>
+                                <th scope="col">#Registro</th>
                                 <th scope="col">Fecha y Hora</th>
                                 <th scope="col">Documento</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Apellido</th>
                                 <th scope="col">Barrio</th>
-                                <th scope="col">Detalles del lugar</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="registroTrackingR : ${registroTrackingR}">
-                                <td th:text="${registroTracking.registroId}"></td>
-                                <td th:text="${registroTracking.fechaHora}"></td>
-                                <td th:text="${registroTracking.validadores.persona.doc}"></td>
-                                <td th:text="${registroTracking.validadores.persona.nombre}"></td>
-                                <td th:text="${registroTracking.validadores.persona.apellido}"></td>
-                                <td th:text="${registroTracking.barrio.localidad}"></td>
-                                <td th:text="${registroTracking.detalleLugarRegistro}"></td>
+                            <tr th:each="personaConsulta : ${personaConsulta}">
+                                <td th:text="${personaConsulta.idCondicion}"></td>
+                                <td th:text="${personaConsulta.fechayhora}"></td>
+                                <td th:text="${personaConsulta.documento}"></td>
+                                <td th:text="${personaConsulta.nombre}"></td>
+                                <td th:text="${personaConsulta.apellido}"></td>
+                                <td th:text="${personaConsulta.localidad}"></td>
+                                
                             </tr>
 
                         </tbody>

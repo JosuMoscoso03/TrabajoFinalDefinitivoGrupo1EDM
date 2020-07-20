@@ -35,7 +35,7 @@
 			</div>
 			<br>
 			<button type="submit" class="btn btn-primary">Ingresar</button>
-			<a class="button_1 text-dark" th:href="@{/nuevoUsuario}"><small>Crear nuevo usuario</small></a>
+			<a class="button_1 text-dark" th:href="@{/cargarUsuario}"><small>Crear nuevo usuario</small></a>
 
 			<div class="alert-danger text-center" th:if="${formLoginErrorMessage}" th:text="${formLoginErrorMesage}">Name Error</div>
 			<div th:if="${param.error}" class="alert alert-danger" role="alert">Combinacion Invalida de Usuario y Contraseña</div>

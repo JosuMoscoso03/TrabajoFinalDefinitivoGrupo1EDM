@@ -32,8 +32,8 @@ public class Barrio implements Serializable{
 	@Column
 	String barrio;
 	
-	@OneToMany(mappedBy = "localidad")
-	private List<RegistroTracking> registrostracking = new ArrayList<RegistroTracking>();
+	@OneToMany(mappedBy = "barrios")
+	private List<RegistroTracking> registrosTracking = new ArrayList<RegistroTracking>();
 	
 	public Barrio() {
 		
@@ -55,16 +55,16 @@ public class Barrio implements Serializable{
 		this.barrio = barrio;
 	}
 
-	public Barrio(Long id, String barrio, List<RegistroTracking> registrostracking) {
+	public Barrio(Long id, String barrio, List<RegistroTracking> registrosTracking) {
 		super();
 		this.id = id;
 		this.barrio = barrio;
-		this.registrostracking = registrostracking;
+		this.registrosTracking = registrosTracking;
 	}
 
 	@Override
 	public String toString() {
-		return "Barrio [id=" + id + ", barrio=" + barrio + ", registrostracking=" + registrostracking + "]";
+		return "Barrio [id=" + id + ", barrio=" + barrio + ", registrosTracking=" + registrosTracking + "]";
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class Barrio implements Serializable{
 		int result = 1;
 		result = prime * result + ((barrio == null) ? 0 : barrio.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((registrostracking == null) ? 0 : registrostracking.hashCode());
+		result = prime * result + ((registrosTracking == null) ? 0 : registrosTracking.hashCode());
 		return result;
 	}
 
@@ -96,10 +96,10 @@ public class Barrio implements Serializable{
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (registrostracking == null) {
-			if (other.registrostracking != null)
+		if (registrosTracking == null) {
+			if (other.registrosTracking != null)
 				return false;
-		} else if (!registrostracking.equals(other.registrostracking))
+		} else if (!registrosTracking.equals(other.registrosTracking))
 			return false;
 		return true;
 	}

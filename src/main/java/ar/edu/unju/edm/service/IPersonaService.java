@@ -1,7 +1,6 @@
 package ar.edu.unju.edm.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -17,5 +16,6 @@ public interface IPersonaService {
 	public void eliminar(Long id);
 	public Persona modificar(Persona unaPersona) throws Exception;
 	public Persona encontrarPersona(Long id) throws Exception;
-
+	public void eliminarPersonas();
+	public Persona buscarPersona(String documento) throws Exception;
 }

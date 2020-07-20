@@ -1,6 +1,7 @@
 package ar.edu.unju.edm.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,5 @@ public interface IBarrioRepository extends JpaRepository<Barrio,Long>{
 
 	@Query("from Barrio e order by e.id")
 	public List<Barrio> listarBarrios();
+	public Optional<Barrio> findByBarrio(String barrio);
 }

@@ -13,46 +13,38 @@ import ar.edu.unju.edm.service.LoginUsuarioServiceImp;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
-	
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
 	@Autowired
 	private AutenticacionSuccessHandler autenticacion;
-	
-	String[] resources = new String[]{
-			"/include/**","/css/**","/icons/**","/img/**","/js/**","/layer/**","/webjars/**"
-	};
-	
+
+	String[] resources = new String[] { "/include/**", "/css/**", "/icons/**", "/img/**", "/js/**", "/layer/**",
+			"/webjars/**" };
+
 	@Override
-	protected void configure(HttpSecurity http) throws Exception{
-		http
-			.authorizeRequests()
-				.antMatchers(resources).permitAll()
-				.antMatchers("/","/home").permitAll()
-				//.anyRequest().authenticated()
-				.and()
-			.formLogin()
-				.loginPage("/login")
-				.permitAll()
-				.successHandler(autenticacion)
-				.failureUrl("/login?error=true")
-				.usernameParameter("nombreUsuario")
-				.passwordParameter("password")
-				.and()
-			.logout()
-				.permitAll()
-				.logoutSuccessUrl("/login?logout");
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers(resources).permitAll().antMatchers("/", "/home").permitAll()
+				.antMatchers("/Lbarrios", "/cargarBarrio", "/guardarBarrio", "/ELBarrio/{id}", "/Mbarrio", "/EDbarrio/{id}", "/Lusuarios", "/guardarUsuario", "/cargarUsuario", "/EDusuario/{id}", "/Elusuario/{id}", "/Musuario/", "/cancelar").hasAuthority("BD")
+		        .antMatchers("/cargarRegistro/","/buscarPersona","/cargarPersona", "/guardarCondicion", "/").hasAuthority("Registrador")
+		        .antMatchers("/consultaDos","consultaUno").hasAuthority("Consultor")
+		        .anyRequest().authenticated()
+				.and().formLogin().loginPage("/login").permitAll()
+				.successHandler(autenticacion).failureUrl("/login?error=true").usernameParameter("nombreUsuario")
+				.passwordParameter("password").and().logout().permitAll().logoutSuccessUrl("/login?logout");
 	}
+
 	BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
 		return bCryptPasswordEncoder;
 	}
-	
+
 	@Autowired
 	LoginUsuarioServiceImp userDetailsService;
-	
+
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());

@@ -43,13 +43,13 @@ public class AutenticacionSuccessHandler implements AuthenticationSuccessHandler
 			}
 		}
 		if(tipoRegistrador) {
-			redirectStrategy.sendRedirect(request, response, "/registrador");
+			redirectStrategy.sendRedirect(request, response, "/cargarRegistro");
 		}else {
 			if(tipoConsultor) {
-				redirectStrategy.sendRedirect(request, response, "/consultor");
+				redirectStrategy.sendRedirect(request, response, "/indexConsultor");
 			}else {
 				if(tipoBD) {
-					redirectStrategy.sendRedirect(request, response, "/cargarUsuario");
+					redirectStrategy.sendRedirect(request, response, "/indexbd");
 				}else {
 					throw new IllegalStateException();
 				}

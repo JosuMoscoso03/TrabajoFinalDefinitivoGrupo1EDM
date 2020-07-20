@@ -32,27 +32,26 @@
 				<div class="card-body">
 					<div style="background-color: #20B2AA;">
 						<h6 class="p-2 mb-2 text-black card-title">PERSONAS QUE
-							CIRCULARON POR UN BARRIO EN UN RANGO DE FECHAS-HORAS</h6>
+							CIRCULARON POR UN BARRIO EN UN RANGO POR FECHA INGRESADA</h6>
 					</div>
-					<form class="form" role="form" th:object="${consulta}"
-						th:action="@{/buscarFechas}" method="post">
+					<form class="form" role="form" th:object="${barrio}"
+						th:action="@{/consultaUno}" method="post">
 
 						<h6>Seleccione el barrio</h6>
-						<select class="form-control"
-							th:field="${registroTracking.barrio.idBarrio}">
-							<option th:each="barrio:${barrios}" th:value="${barrio.idBarrio}"
-								th:text="${barrio.nombre}"></option>
+						<select class="form-control">
+							<option th:each="barrio:${barrio}" th:value="${barrio.id}"
+								th:text="${barrio.barrio}"></option>
 						</select> <br>
 
-						<div class="form-group row">
+						<div class="form-group row" th:object="${consulta}">
 							<label for="fechaInicial"
 								class="col-lg-3 col-form-label form-control-label">Fecha
 								inicial</label>
 							<div class="col-lg-9 input-group date" id="datetimepicker1"
 								data-target-input="nearest">
-								<input type="text" class="form-control datetimepicker-input"
-									data-target="#fechaInicial" id="fecha01"
-									placeholder="Fecha inicial" th:field="${consulta.fechaHora1}" />
+								<input type="datetime-local" class="form-control datetimepicker-input"
+									data-target="#fechaInicial" id="fecha01" placeholder="Fecha inicial" 
+									th:field="${consulta.fechaHD}" />
 								<div class="input-group-append" data-target="#datetimepicker1"
 									data-toggle="datetimepicker">
 									<div class="input-group-text">
@@ -68,9 +67,9 @@
 								final:</label>
 							<div class="col-lg-9 input-group date" id="datetimepicker2"
 								data-target-input="nearest">
-								<input type="text" class="form-control datetimepicker-input"
+								<input type="datetime-local" class="form-control datetimepicker-input"
 									data-target="#fechaFinal" id="fecha01"
-									placeholder="Fecha final" th:field="${consulta.fechaHora1}" />
+									placeholder="Fecha final" th:field="${consulta.fechaHH}" />
 								<div class="input-group-append" data-target="#datetimepicker2"
 									data-toggle="datetimepicker">
 									<div class="input-group-text">
@@ -79,18 +78,7 @@
 								</div>
 							</div>
 						</div>
-
-						<script type="text/javascript">
-							$(function() {
-								$('#datetimepicker1').datetimepicker({
-									format : "DD/MM/YYYY"
-								});
-								$('#datetimepicker2').datetimepicker({
-									format : "DD/MM/YYYY"
-								});
-							});
-						</script>
-
+						
 						<input type="submit" class="btn btn-primary" value="Buscar">
 					</form>
 				</div>
@@ -113,15 +101,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="persona:${personas}">
+							<tr th:each="persona:${consulta1}">
 								<td th:text="${persona.id}"></td>
 								<td th:text="${persona.documento}"></td>
 								<td th:text="${persona.nombres}"></td>
 								<td th:text="${persona.apellido}"></td>
 								<td th:text="${persona.nacionalidad}"></td>
-								<td><a class="btn btn-warning" href="#"
-									th:onclick="'javascript:mostrarCondicion(\''+${persona.id}+'\');'">Visualizar
-										Condicion Sanitaria</a></td>
+								<td>Visualizar Condicion Sanitaria</td>
 							</tr>
 
 						</tbody>
@@ -138,6 +124,7 @@
 		</script>
 
 <br> <br>
+<!--  
 		<div class="container">
 		<div class="modal fade" id="modalCondicion" tabindex="-1" role="dialog" aria-labelledby="modalCondicion" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
@@ -146,9 +133,8 @@
 				<div style="background-color: #20B2AA;"> 
 				<h4 class="p-2 mb-2 text-black card-title">CONDICION SANITARIA</h4>
 				</div>
-				
-		<form th:action="@{/guardarCondicion}" th:object=${validarF} method="post" >
-		<input type ="hidden" th:field="*{persona.id}" id="identificadorPersonaHiddenInput" name="personaIdHiddenInput"/>
+		<form th:action="@{/mostrarCondiciones}" th:object=${validarF} method="post" >
+		<input type ="hidden" th:field="*{consulta1.id_Testeos}" id="identificadorPersonaHiddenInput" name="personaIdHiddenInput"/>
 					<fieldset class="form-group">
 						<div class="row">
 							<legend class="col-form-label col-sm-4 pt-0"> Usa tapaboca:</legend>
@@ -236,9 +222,12 @@
 </div>
 </div>
 </div>
+-->
+
 
 		<br> <br> <br>
 	</div>
+
 
 
 	<div th:insert="layout/footer :: footer"></div>

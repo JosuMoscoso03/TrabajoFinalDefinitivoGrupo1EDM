@@ -1,5 +1,6 @@
 package ar.edu.unju.edm.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class IBarrioServiceImp implements IBarrioService{
 
 	@Autowired
 	IBarrioRepository iBarrio;
-	
+	private List <Barrio> auxbarrio = new ArrayList<>();
 	@Override
 	public List<Barrio> listarBarrio() {
 		return iBarrio.listarBarrios();
@@ -49,5 +50,14 @@ public class IBarrioServiceImp implements IBarrioService{
 	@Override
 	public Long devolverIdBarrio (Barrio Barrio) {
 		return Barrio.getId();
+	}
+	@Override
+	public Barrio buscarBarrio(String barrio) throws Exception {
+		return iBarrio.findByBarrio(barrio).orElseThrow(()-> new Exception("El barrio no existe")) ;		
+	}
+	
+    @Override
+	public List<Barrio> obtenerBarrios() {
+		return auxbarrio;
 	}
 }

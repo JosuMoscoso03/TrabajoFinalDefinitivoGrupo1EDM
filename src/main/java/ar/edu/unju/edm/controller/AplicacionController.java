@@ -19,6 +19,16 @@ public class AplicacionController {
 		return "login";
 	}
 
+	@GetMapping("/indexConsultor")
+	public String obtenerC(Model model) {
+		return "indexConsultor";
+	}
+	
+	@GetMapping("/indexBD")
+	public String obtenerB(Model model) {
+		return "indexbd";
+	}
+	
 	@GetMapping("/logout")
     public String fetchSignoutSite(HttpServletRequest request, HttpServletResponse response) {        
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

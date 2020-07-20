@@ -1,9 +1,7 @@
 package ar.edu.unju.edm.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +14,12 @@ public class IPersonaServiceImp implements IPersonaService {
 	
 	@Autowired
 	IPersonaRepository ipersona;
-	private List <Persona> aux = new ArrayList<>();
+	private List<Persona> perAux = new ArrayList<>();
 	@Override
 	public void guardar(Persona unaPersona) {
 		// TODO Auto-generated method stub
 		ipersona.save (unaPersona);
+		perAux.add (unaPersona);
 	}
 	@Override
 	public Persona encontrarPersona(Long id) throws Exception {
@@ -29,20 +28,6 @@ public class IPersonaServiceImp implements IPersonaService {
 
 	}
 	
-	/*
-	 * 
-	 
-	@Override
-	public void ListarPersona(Persona unaPersona) {
-		// TODO Auto-generated method stub
-		while(listadoP.hasNext()) {
-			unaPersona = listadoP.next();
-			System.out.print(unaPersona);
-		}
-	}
-
-	
-	**/
 	@Override
 	public List<Persona> listarPersona() {
 		return ipersona.listarPersonas();
@@ -52,7 +37,12 @@ public class IPersonaServiceImp implements IPersonaService {
 	public void eliminar(Long id) {
 		ipersona.deleteById(id);
 	}
-
+	
+	@Override
+	public void eliminarPersonas() {
+		perAux = new ArrayList<>();
+	}
+	
 	@Override
 	public Persona modificar(Persona unaPersona) throws Exception {
 		Persona personaB = encontrarPersona(unaPersona.getId());
@@ -68,6 +58,10 @@ public class IPersonaServiceImp implements IPersonaService {
 	}
 	@Override
 	public List<Persona> obtenerPersonas() {
-		return aux;
+		return perAux;
+	}
+	@Override
+	public Persona buscarPersona(String documento) throws Exception {
+		return ipersona.findByDocumento(documento).orElseThrow(()-> new Exception("La persona no existe en la base de datos")) ;
 	}
 }
