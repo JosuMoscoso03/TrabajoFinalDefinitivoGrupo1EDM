@@ -1,6 +1,7 @@
 package ar.edu.unju.edm.service;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,21 +26,43 @@ public class ITrackingServiceImp implements ITrackingService {
 	}
 
 	@Override
-	public void eliminar() {
+	public void eliminar(Long id) {
 		// TODO Auto-generated method stub
-		
+		iRegistro.deleteById(id);
 	}
 
 	@Override
-	public RegistroTracking modificar() {
+	public RegistroTracking modificar(RegistroTracking registro) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		RegistroTracking unregistro = encontrarRegistro (registro.getId());
+		mapearRegistro(registro,unregistro);
+		return iRegistro.save(unregistro);
+	}
+	
+	public void mapearRegistro(RegistroTracking desde, RegistroTracking hacia) {
+		hacia.setDetalleLugarRegistro(desde.getDetalleLugarRegistro());
+		hacia.setFechaHora(desde.getFechaHora());
+		hacia.setLocalidad(desde.getLocalidad());
+		hacia.setValidadores(desde.getValidadores());
+	
+	}
+	@Override
+	public RegistroTracking encontrarRegistro(Long id) throws Exception {
+		// TODO Auto-generated method stub
+		return iRegistro.findById(id).orElseThrow(() -> new Exception("Error"));
 	}
 
 	@Override
-	public Optional<RegistroTracking> encontrarUsuario(Long id) {
+	public List<RegistroTracking> obtenerRecorridoFechaOrdenado() {
 		// TODO Auto-generated method stub
-		Optional<RegistroTracking> registroEncontrado = iRegistro.findById(id);
-		return registroEncontrado;
+		List<RegistroTracking> registros = iRegistro.findAllByOrderByfechaHoraAsc();
+		return registros;
+	}
+
+	@Override
+	public List<RegistroTracking> obtenerRecorridoRango(LocalDateTime t1, LocalDateTime t2) {
+		// TODO Auto-generated method stub
+		List<RegistroTracking> rangos=iRegistro.findByfechaHoraBetween(t1,t2);
+		return rangos;
 	}
 }

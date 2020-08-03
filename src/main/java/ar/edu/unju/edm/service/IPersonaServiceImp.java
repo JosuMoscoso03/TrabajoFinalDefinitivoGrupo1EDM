@@ -1,9 +1,7 @@
 package ar.edu.unju.edm.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,20 +27,6 @@ public class IPersonaServiceImp implements IPersonaService {
 
 	}
 	
-	/*
-	 * 
-	 
-	@Override
-	public void ListarPersona(Persona unaPersona) {
-		// TODO Auto-generated method stub
-		while(listadoP.hasNext()) {
-			unaPersona = listadoP.next();
-			System.out.print(unaPersona);
-		}
-	}
-
-	
-	**/
 	@Override
 	public List<Persona> listarPersona() {
 		return ipersona.listarPersonas();
@@ -69,5 +53,10 @@ public class IPersonaServiceImp implements IPersonaService {
 	@Override
 	public List<Persona> obtenerPersonas() {
 		return aux;
+	}
+	@Override
+	public Persona buscarPersona(String documento) throws Exception {
+		// TODO Auto-generated method stub
+		return ipersona.findByDocumento(documento).orElseThrow(()-> new Exception("La persona no existe en la base de datos")) ;
 	}
 }

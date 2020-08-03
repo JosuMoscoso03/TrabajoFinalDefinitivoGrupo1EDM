@@ -32,30 +32,24 @@
 				<div class="card-body">
 					<div style="background-color: #20B2AA;">
 						<h6 class="p-2 mb-2 text-black card-title">PERSONAS QUE
-							CIRCULARON POR UN BARRIO EN UN RANGO DE FECHAS-HORAS</h6>
+							CIRCULARON POR UN BARRIO EN UN RANGO POR FECHA INGRESADA</h6>
 					</div>
 					<form class="form" role="form" th:object="${consulta}"
-						th:action="@{/buscarFechas}" method="post">
-
+						th:action="@{/consultaUno}" method="post">
 						<h6>Seleccione el barrio</h6>
-						<select class="form-control"
-							th:field="${registroTracking.barrio.idBarrio}">
-							<option th:each="barrio:${barrios}" th:value="${barrio.idBarrio}"
-								th:text="${barrio.nombre}"></option>
+						<select class="form-control " th:field="${consulta.barrio}">
+							<option  selected value=""> </option>
+							<option  th:each="barrios:${barrios}" th:value="${barrios.id}" th:text="${barrios.barrio}"></option>
 						</select> <br>
 
 						<div class="form-group row">
-							<label for="fechaInicial"
-								class="col-lg-3 col-form-label form-control-label">Fecha
-								inicial</label>
-							<div class="col-lg-9 input-group date" id="datetimepicker1"
-								data-target-input="nearest">
-								<input type="text" class="form-control datetimepicker-input"
-									data-target="#fechaInicial" id="fecha01"
-									placeholder="Fecha inicial" th:field="${consulta.fechaHora1}" />
+							<label for="fechaInicial" class="col-lg-3 col-form-label form-control-label">Fecha inicial</label>
+							<div class="col-lg-9 input-group date" id="datetimepicker1" data-target-input="nearest">
+								<input type="datetime-local" class="form-control datetimepicker-input"
+								    data-target="#fechaInicial" id="fecha01" placeholder="Fecha inicial" th:field="${consulta.fechaDesde}" />
 								<div class="input-group-append" data-target="#datetimepicker1"
 									data-toggle="datetimepicker">
-									<div class="input-group-text">
+									<div class="input-group-datetime-local">
 										<i class="fa fa-calendar-alt"></i>
 									</div>
 								</div>
@@ -63,34 +57,18 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="fecha"
-								class="col-lg-3 col-form-label form-control-label">Fecha
-								final:</label>
-							<div class="col-lg-9 input-group date" id="datetimepicker2"
-								data-target-input="nearest">
-								<input type="text" class="form-control datetimepicker-input"
-									data-target="#fechaFinal" id="fecha01"
-									placeholder="Fecha final" th:field="${consulta.fechaHora1}" />
-								<div class="input-group-append" data-target="#datetimepicker2"
-									data-toggle="datetimepicker">
-									<div class="input-group-text">
+							<label for="fechaFinal" class="col-lg-3 col-form-label form-control-label">Fecha final:</label>
+							<div class="col-lg-9 input-group date" id="datetimepicker2" data-target-input="nearest">
+								<input type="datetime-local" class="form-control datetimepicker-input"
+									data-target="#fechaFinal" id="fecha02"placeholder="Fecha final" th:field="${consulta.fechaHacia}"/>
+								<div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+									<div class="input-group-datetime-local">
 										<i class="fa fa-calendar-alt"></i>
 									</div>
 								</div>
 							</div>
 						</div>
-
-						<script type="text/javascript">
-							$(function() {
-								$('#datetimepicker1').datetimepicker({
-									format : "DD/MM/YYYY"
-								});
-								$('#datetimepicker2').datetimepicker({
-									format : "DD/MM/YYYY"
-								});
-							});
-						</script>
-
+						
 						<input type="submit" class="btn btn-primary" value="Buscar">
 					</form>
 				</div>
@@ -100,35 +78,63 @@
 		<div class="card">
 			<div class="card-body">
 				<h5 class="p-2 mb-2 text-black card-title">PERSONAS</h5>
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead class="thead-light">
+				<div class="table-responsive ">
+					<table class="table table-striped ">
+						<thead class="thead-light " >
 							<tr>
 								<th scope="col">#</th>
 								<th scope="col">Documento</th>
 								<th scope="col">Nombres</th>
 								<th scope="col">Apellido</th>
-								<th scope="col">Nacionalidad</th>
 								<th scope="col">CONDICION SANITARIA</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="persona:${personas}">
-								<td th:text="${persona.id}"></td>
-								<td th:text="${persona.documento}"></td>
-								<td th:text="${persona.nombres}"></td>
-								<td th:text="${persona.apellido}"></td>
-								<td th:text="${persona.nacionalidad}"></td>
-								<td><a class="btn btn-warning" href="#"
-									th:onclick="'javascript:mostrarCondicion(\''+${persona.id}+'\');'">Visualizar
-										Condicion Sanitaria</a></td>
-							</tr>
-
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+							<tr th:each="personaConsulta:${personaConsulta}" >
+								<td th:text="${personaConsulta.id_testeos}"></td>
+								<td th:text="${personaConsulta.documento}"></td>
+								<td th:text="${personaConsulta.nombres}"></td>
+								<td th:text="${personaConsulta.apellido}"></td>
+								<td><a class="btn btn-info" href="#" data-toggle="modal" data-target="#modalBuscar">VER CONDICION SANITARIA </a> </td>
+					</tr>
+				</tbody>
+			</table>
+			 <div class="modal fade" id="modalBuscar" tabindex="-1" role="dialog" aria-labelledby="modalBuscar" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="id">
+				<div class="modal-content">
+					<form id="personaForm" th:object="${condiciones}" th:action="@{/consultaTres}" method="post">
+						<div class="modal-header" style="background-color: #20B2AA;">
+				<h5 id="modalBuscar" class="modal-title p-2 mb-2 text-black card-title">Condicion Sanitaria</h5>			
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+							  <table class="table table-striped">
+							<thead class="thead-light" >
+								<tr>
+									<th scope="col" class="text-center">#</th>
+									<th scope="col" class="text-center">Usa TapaBoca</th>
+									<th scope="col" class="text-center">Cumple Terminacion de DNI</th>
+									<th scope="col" class="text-center">Esta Acompanado</th>
+									<th scope="col" class="text-center">Posee Permiso de Circulacion</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="condiciones:${condiciones}">
+									<td th:text="${condiciones.id}"></td>
+									<td th:text="${condiciones.usaTapaBoca}"></td>
+									<td th:text="${condiciones.cumpleTerminacionDNI}"></td>
+									<td th:text="${condiciones.estaAcompanado}"></td>
+									<td th:text="${condiciones.poseePermisoCirculacion}"></td>
+							</tbody>	
+				</table>
+				</div></div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-info" data-dismiss="modal">Cerrar</button>
+						</div>
+					</form>
+<br> <br> <br>
+	</div></div></div>
+</div></div></div>
 
 		<script type="text/javascript">
 			function mostrarCondicion(id) {
@@ -138,109 +144,11 @@
 		</script>
 
 <br> <br>
-		<div class="container">
-		<div class="modal fade" id="modalCondicion" tabindex="-1" role="dialog" aria-labelledby="modalCondicion" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-				<div class="card-body">
-				<div style="background-color: #20B2AA;"> 
-				<h4 class="p-2 mb-2 text-black card-title">CONDICION SANITARIA</h4>
-				</div>
-				
-		<form th:action="@{/guardarCondicion}" th:object=${validarF} method="post" >
-		<input type ="hidden" th:field="*{persona.id}" id="identificadorPersonaHiddenInput" name="personaIdHiddenInput"/>
-					<fieldset class="form-group">
-						<div class="row">
-							<legend class="col-form-label col-sm-4 pt-0"> Usa tapaboca:</legend>
-						<div class="col-sm-8">
-							<div class="form-check">
-								<input th:field="*{usaTapaBoca}" class="form-check-input"
-									type="radio" name="usaTapaboca" id="usaTapaboca"
-									value=true> <label class="form-check-label"
-									for="usaTapaboca">Si</label>
-							</div>
-							<div class="form-check">
-								<input th:field="*{usaTapaBoca}" class="form-check-input"
-									type="radio" name="usaTapaboca" id="usaTapaboca"
-									value=false> <label class="form-check-label"
-									for="usaTapaboca">No</label>
-							</div>
-						</div>
-						</div>
-					</fieldset>
-					<fieldset class="form-group">
-						<div class="row">
-							<legend class="col-form-label col-sm-4 pt-0">Cumple Terminacion del DNI:</legend>
-						<div class="col-sm-8">
-							<div class="form-check">
-								<input th:field="*{cumpleTerminacionDNI}"
-									class="form-check-input" type="radio"
-									name="terminacionDni" id="terminacionDni" value=true
-									checked> <label class="form-check-label" for="terminacioniDni">Si</label>
-							</div>
-							<div class="form-check">
-								<input th:field="*{cumpleTerminacionDNI}" class="form-check-input" type="radio"
-									name="terminacionDni" id="terminacionDni" value=false>
-									<label class="form-check-label" for="terminacioniDni">No</label>
-							</div>
-						</div>
-						</div>
-					</fieldset>
-					<fieldset class="form-group">
-						<div class="row">
-							<legend class="col-form-label col-sm-4 pt-0">Posee permiso de circulacion:</legend>
-						<div class="col-sm-8">
-							<div class="form-check">
-								<input th:field="*{poseePermisoCirculacion}"
-									class="form-check-input" type="radio"
-									name="permisoCirculacion" id="permisoCirculacion"
-									value=true checked> <label
-									class="form-check-label" for="permisoCirculacion">Si</label>
-							</div>
-							<div class="form-check">
-								<input th:field="*{poseePermisoCirculacion}"
-									class="form-check-input" type="radio"
-									name="permisoCirculacion" id="permisoCirculacion"
-									value=false> <label class="form-check-label"
-									for="permisoCirculacion">No</label>
-							</div>
-						</div>
-						</div>
-					</fieldset>
-					<fieldset class="form-group">
-						<div class="row">
-							<legend class="col-form-label col-sm-4 pt-0">Va acompanado/a:</legend>
-							<div class="col-sm-8">
-								<div class="form-check">
-									<input th:field="*{estaAcompanado}"
-										class="form-check-input" type="radio"
-										name="estaAcompanado" id="estaAcompanado" value=true>
-									<label class="form-check-label" for="estaAcompanado">Si</label>
-								</div>
-								<div class="form-check">
-									<input th:field="*{estaAcompanado}"
-										class="form-check-input" type="radio"
-										name="estaAcompanado" id="estaAcompanado" value=false>
-									<label class="form-check-label" for="estaAcompanado">No</label>
-								</div>
-							</div>
-						</div>
-					</fieldset>
-		<blockquote class="blockquote text-center">
-			<button type="submit" class="btn btn-outline-primary" >Agregar </button>
-			<a class="btn btn-outline-danger" th:href="@{cargarCondicion/cancelar}">Cancelar</a>
-		</blockquote>
-	</form>
-	</div>
-	</div>
-</div>
-</div>
-</div>
-
-		<br> <br> <br>
-	</div>
 
 
+	</div>	
+
+<br> <br> <br>
 	<div th:insert="layout/footer :: footer"></div>
 	
 </body>
