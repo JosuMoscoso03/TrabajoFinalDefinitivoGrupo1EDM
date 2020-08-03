@@ -15,5 +15,6 @@ public interface IBarrioService {
 	public Barrio modificar(Barrio unBarrio) throws Exception;
 	public void eliminar(Long id);
 	public Long devolverIdBarrio (Barrio Barrio);
-
+	public Barrio buscarBarrio(String barrio) throws Exception;
+	public List<Barrio> obtenerBarrios();
 }

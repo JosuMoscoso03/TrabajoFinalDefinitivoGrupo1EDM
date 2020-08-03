@@ -14,11 +14,12 @@ public class IPersonaServiceImp implements IPersonaService {
 	
 	@Autowired
 	IPersonaRepository ipersona;
-	private List <Persona> aux = new ArrayList<>();
+	private List<Persona> perAux = new ArrayList<>();
 	@Override
 	public void guardar(Persona unaPersona) {
 		// TODO Auto-generated method stub
 		ipersona.save (unaPersona);
+		perAux.add (unaPersona);
 	}
 	@Override
 	public Persona encontrarPersona(Long id) throws Exception {
@@ -36,7 +37,8 @@ public class IPersonaServiceImp implements IPersonaService {
 	public void eliminar(Long id) {
 		ipersona.deleteById(id);
 	}
-
+	
+	
 	@Override
 	public Persona modificar(Persona unaPersona) throws Exception {
 		Persona personaB = encontrarPersona(unaPersona.getId());
@@ -52,11 +54,11 @@ public class IPersonaServiceImp implements IPersonaService {
 	}
 	@Override
 	public List<Persona> obtenerPersonas() {
-		return aux;
+		return perAux;
 	}
 	@Override
 	public Persona buscarPersona(String documento) throws Exception {
-		// TODO Auto-generated method stub
 		return ipersona.findByDocumento(documento).orElseThrow(()-> new Exception("La persona no existe en la base de datos")) ;
 	}
+	
 }

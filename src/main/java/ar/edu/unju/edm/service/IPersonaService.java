@@ -16,6 +16,5 @@ public interface IPersonaService {
 	public void eliminar(Long id);
 	public Persona modificar(Persona unaPersona) throws Exception;
 	public Persona encontrarPersona(Long id) throws Exception;
-	//Consulta2
 	public Persona buscarPersona(String documento) throws Exception;
 }

@@ -13,4 +13,6 @@ public interface ICondicionService {
 	public void eliminar(Long id);
 	public ValidarCondicionSanitaria modificar(ValidarCondicionSanitaria condicion) throws Exception;
 	public ValidarCondicionSanitaria encontrarValidacion(Long id) throws Exception;
+	public List<ValidarCondicionSanitaria> listarCondicion();
+	public List<ValidarCondicionSanitaria> obtenerCondiciones();
 }

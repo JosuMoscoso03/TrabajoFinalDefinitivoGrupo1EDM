@@ -1,29 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <head>
 <meta charset="ISO-8859-1">
 <title>Registro Tracking</title>
-
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 	crossorigin="anonymous">
-
 </head>
 <body>
 	<div th:insert="layout/header :: header"></div>
-
+<br><br>
 	<div class="container">
 		<br> <br> <br>
 		<h1>REGISTRO TRACKING</h1>
 		<br>
 		<p>Busque y seleccione una persona, de no encontrarla, agreguela.</p>
-		<button type="button" class="btn btn-primary" data-toggle="modal"
-			data-target="#modalBuscarPersona">Buscar Persona</button>
-		<a th:href="@{/cargarPersona}" class="btn btn-primary text-white">
-			Agregar Persona </a> <br> <br>
-		<form th:action="@{/guardarCondicion}"
-			th:object=${ValidarCondicionSanitaria} method="POST">
+<button type="button" class="btn btn-primary" data-toggle="modal"
+			data-target="#modalBuscar">Buscar Persona</button>
+	<div class="modal fade" id="modalBuscar" tabindex="-1"
+			role="dialog" aria-labelledby="modalBuscar" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<form id="personaForm" th:object="${personaF}" th:action="@{/buscarPersona}" method="post">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalBuscar">Buscar persona</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="doc">DNI</label> <input class="form-control"
+									id="dni" th:field="${personaF.documento}"
+									placeholder="Ingresar numero de DNI"></input>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Cerrar</button>
+							<input type="submit" class="btn btn-primary"
+								value="Buscar Persona"/>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	<a th:href="@{/cargarPersona}" class="btn btn-primary text-white"> Agregar Persona </a> 
+			<br> <br>
 			<div class="card">
 				<div class="card-body">
 					<h5 class="p-2 mb-2 text-black card-title">PERSONAS</h5>
@@ -46,9 +76,9 @@
 									<td th:text="${persona.nombres}"></td>
 									<td th:text="${persona.apellido}"></td>
 									<td th:text="${persona.nacionalidad}"></td>
-									<td><a class="btn btn-warning" href="#"
-										th:href="@{'/cargarCondicion/'+${persona.id}}">AGREGAR
-											CONDICION SANITARIA</a></td>
+									<td>
+									<a class="btn btn-warning" href="#" th:onclick="'javascript:nuevaCondicion(\''+${persona.id}+'\');'">AGREGAR CONDICION SANITARIA</a>
+									</td>			
 								</tr>
 
 							</tbody>
@@ -56,22 +86,132 @@
 					</div>
 				</div>
 			</div>
-		</form>
-		<br> <br> <br>
 
+<br><br>
 
-		<form autocomplete="off" id="formRegistro"
-			th:object="${registroTrackingF}" th:action="@{/guardarRegistro}"
-			method="post">
+	<script type="text/javascript">
+				function nuevaCondicion(id) {
+					$('#modalCondicion').modal('show');
+					$("#identificadorPersonaHiddenInput").val(id);
+				}
+				function guardarCondicion() {
+					var id = $("#identificadorPersonaHiddenInput").val();
+					window.location = "cargarCondicion/" + id;
+				}
+	</script>
+	<br> <br>
+		<div class="container">
+		<div class="modal fade" id="modalCondicion" tabindex="-1" role="dialog" aria-labelledby="modalCondicion" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+				<div class="card-body">
+				<div style="background-color: #20B2AA;"> 
+				<h4 class="p-2 mb-2 text-black card-title">CONDICION SANITARIA</h4>
+				</div>
+				
+		<form th:action="@{/guardarCondicion}" th:object=${validarF} method="post" >
+		<input type ="hidden" th:field="*{persona.id}" id="identificadorPersonaHiddenInput" name="personaIdHiddenInput"/>
+					<fieldset class="form-group">
+						<div class="row">
+							<legend class="col-form-label col-sm-4 pt-0"> Usa tapaboca:</legend>
+						<div class="col-sm-8">
+							<div class="form-check">
+								<input th:field="*{usaTapaBoca}" class="form-check-input"
+									type="radio" name="usaTapaboca" id="usaTapaboca"
+									value=true> <label class="form-check-label"
+									for="usaTapaboca">Si</label>
+							</div>
+							<div class="form-check">
+								<input th:field="*{usaTapaBoca}" class="form-check-input"
+									type="radio" name="usaTapaboca" id="usaTapaboca"
+									value=false> <label class="form-check-label"
+									for="usaTapaboca">No</label>
+							</div>
+						</div>
+						</div>
+					</fieldset>
+					<fieldset class="form-group">
+						<div class="row">
+							<legend class="col-form-label col-sm-4 pt-0">Cumple Terminacion del DNI:</legend>
+						<div class="col-sm-8">
+							<div class="form-check">
+								<input th:field="*{cumpleTerminacionDNI}"
+									class="form-check-input" type="radio"
+									name="terminacionDni" id="terminacionDni" value=true
+									checked> <label class="form-check-label" for="terminacioniDni">Si</label>
+							</div>
+							<div class="form-check">
+								<input th:field="*{cumpleTerminacionDNI}" class="form-check-input" type="radio"
+									name="terminacionDni" id="terminacionDni" value=false>
+									<label class="form-check-label" for="terminacioniDni">No</label>
+							</div>
+						</div>
+						</div>
+					</fieldset>
+					<fieldset class="form-group">
+						<div class="row">
+							<legend class="col-form-label col-sm-4 pt-0">Posee permiso de circulacion:</legend>
+						<div class="col-sm-8">
+							<div class="form-check">
+								<input th:field="*{poseePermisoCirculacion}"
+									class="form-check-input" type="radio"
+									name="permisoCirculacion" id="permisoCirculacion"
+									value=true checked> <label
+									class="form-check-label" for="permisoCirculacion">Si</label>
+							</div>
+							<div class="form-check">
+								<input th:field="*{poseePermisoCirculacion}"
+									class="form-check-input" type="radio"
+									name="permisoCirculacion" id="permisoCirculacion"
+									value=false> <label class="form-check-label"
+									for="permisoCirculacion">No</label>
+							</div>
+						</div>
+						</div>
+					</fieldset>
+					<fieldset class="form-group">
+						<div class="row">
+							<legend class="col-form-label col-sm-4 pt-0">Va acompanado/a:</legend>
+							<div class="col-sm-8">
+								<div class="form-check">
+									<input th:field="*{estaAcompanado}"
+										class="form-check-input" type="radio"
+										name="estaAcompanado" id="estaAcompanado" value=true>
+									<label class="form-check-label" for="estaAcompanado">Si</label>
+								</div>
+								<div class="form-check">
+									<input th:field="*{estaAcompanado}"
+										class="form-check-input" type="radio"
+										name="estaAcompanado" id="estaAcompanado" value=false>
+									<label class="form-check-label" for="estaAcompanado">No</label>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+		<blockquote class="blockquote text-center">
+			<button type="submit" class="btn btn-outline-primary" >Agregar </button>
+			<a class="btn btn-outline-danger" th:href="@{cargarCondicion/cancelar}">Cancelar</a>
+		</blockquote>
+	</form>
+	</div>
+	</div>
+</div>
+</div>
+</div><br><br>
+
+     <form autocomplete="off" id="formRegistro" th:object="${registroTrackingF}" th:action="@{/cargarRegistro}" method="post">
+			<div class= "card">
 			<div class="card col-md-12 mx-auto">
 				<div class="card-body">
-					<div style= "background-color: #20B2AA;">
+
+					<div style="background-color: #20B2AA;">
 						<h4 class="p-2 mb-2 text-black card-title">BARRIO</h4>
 					</div>
 					<h6>Seleccione el barrio</h6>
 					<select class="form-control"
 						th:field="${registroTrackingF.barrios.id}">
-						<option th:each="barrios:${barrios}" th:value="${barrios.id}" th:text="${barrios.barrio}"></option>
+						<option th:each="barrios:${barrios}" th:value="${barrios.id}"
+							th:text="${barrios.barrio}"></option>
 					</select> <br>
 					<div class="form-group">
 						<label for="exampleFormControlTextarea1">Detalle del lugar</label>
@@ -80,53 +220,12 @@
 					</div>
 				</div>
 			</div>
+			</div>
 			<br>
 			<button type="submit" class="btn btn-primary">Agregar Registro</button>
-			<a class="btn btn-danger text-white" th:href="@{guardarRegistro/cancelar}">Cancelar</a>
+			<a class="btn btn-danger text-white" th:href="@{cargarRegistro/cancelar}">Cancelar</a>
 		</form>
 		<br> <br> <br> <br>
-
-		<div class="modal fade" id="modalBuscarPersona" tabindex="-1"
-			role="dialog" aria-labelledby="buscarPersonaModal" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<form id="personaForm" th:object="${personaF}"
-						th:action="@{/buscarPersona}" method="post">
-						<div class="modal-header">
-							<h5 class="modal-title" id="buscarPersonaModal">Buscar
-								persona</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<div class="form-group">
-								<label for="doc">DNI</label> <input class="form-control"
-									id="dni" th:field="${personaF.documento}"
-									placeholder="Ingresar numero de DNI"></input>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Cerrar</button>
-							<input type="submit" class="btn btn-primary"
-								value="Buscar Persona">
-						</div>
-					</form>
-
-				</div>
-			</div>
 		</div>
-
-
-	</div>
-
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-		crossorigin="anonymous"></script>
-
-	<div th:insert="layout/footer :: footer"></div>
 </body>
 </html>

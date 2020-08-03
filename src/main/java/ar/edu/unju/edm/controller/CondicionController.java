@@ -9,26 +9,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import ar.edu.unju.edm.model.ValidarCondicionSanitaria;
 import ar.edu.unju.edm.service.ICondicionService;
-import ar.edu.unju.edm.service.IPersonaService;
 
 @Controller
 public class CondicionController {
 	@Autowired
 	ICondicionService icondicion;
 
-	@Autowired
-	IPersonaService ipersona;
+
 	@GetMapping("/cargarCondicion/{id}")
-	public String agregarP(Model model) {
+	public String agregarC(Model model) {
 		model.addAttribute("validarF", new ValidarCondicionSanitaria());
-		return "condicionSanitaria";
+		return "redirect:/cargarRegistro";
 	}
 	
 	@PostMapping("/guardarCondicion")
-	public String guardarP(@ModelAttribute ValidarCondicionSanitaria condicion, Model model) {
+	public String guardarC(@ModelAttribute ValidarCondicionSanitaria condicion, Model model) {
 		icondicion.guardar(condicion);
 		model.addAttribute("validarF", new ValidarCondicionSanitaria());
-		return "redirect:/cargarCondicion/{id}"; 
+		return "redirect:/cargarRegistro"; 
 	}
 
 }
+

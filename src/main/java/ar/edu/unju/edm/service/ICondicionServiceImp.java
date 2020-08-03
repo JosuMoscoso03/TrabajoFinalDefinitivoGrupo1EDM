@@ -1,5 +1,6 @@
 package ar.edu.unju.edm.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,19 @@ import ar.edu.unju.edm.repository.ICondicionRepository;
 public class ICondicionServiceImp implements ICondicionService {
 	@Autowired
 	ICondicionRepository iCondicion;
-		
+	
+	private List<ValidarCondicionSanitaria> condaux = new ArrayList<>();
+    
+	@Override
+	public List<ValidarCondicionSanitaria> obtenerCondiciones(){
+		return condaux;
+	}
+	
+    @Override
+	public List<ValidarCondicionSanitaria> listarCondicion() {
+		// TODO Auto-generated method stub
+		return iCondicion.listarCondiciones();
+	}
 	@Override
 	public void guardar(ValidarCondicionSanitaria condicion) {
 		// TODO Auto-generated method stub

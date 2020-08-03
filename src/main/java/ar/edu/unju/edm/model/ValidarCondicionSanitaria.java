@@ -38,18 +38,14 @@ public class ValidarCondicionSanitaria implements Serializable {
 	boolean poseePermisoCirculacion;
 	@Column
 	boolean estaAcompanado;
-	@ManyToOne
-	@JoinColumn (name = "RegistroID")
-	RegistroTracking registro;
+	
 	public ValidarCondicionSanitaria() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
 	public ValidarCondicionSanitaria(Long id, Persona persona, boolean usaTapaBoca, boolean cumpleTerminacionDNI,
-			boolean poseePermisoCirculacion, boolean estaAcompanado, RegistroTracking registro) {
+			boolean poseePermisoCirculacion, boolean estaAcompanado) {
 		super();
 		this.id = id;
 		this.persona = persona;
@@ -57,20 +53,43 @@ public class ValidarCondicionSanitaria implements Serializable {
 		this.cumpleTerminacionDNI = cumpleTerminacionDNI;
 		this.poseePermisoCirculacion = poseePermisoCirculacion;
 		this.estaAcompanado = estaAcompanado;
-		this.registro = registro;
 	}
-
-
-
-	@Override
-	public String toString() {
-		return "ValidarCondicionSanitaria [id=" + id + ", persona=" + persona + ", usaTapaBoca=" + usaTapaBoca
-				+ ", cumpleTerminacionDNI=" + cumpleTerminacionDNI + ", poseePermisoCirculacion="
-				+ poseePermisoCirculacion + ", estaAcompanado=" + estaAcompanado + ", registro=" + registro + "]";
+	public Long getId() {
+		return id;
 	}
-
-
-
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Persona getPersona() {
+		return persona;
+	}
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}
+	public boolean isUsaTapaBoca() {
+		return usaTapaBoca;
+	}
+	public void setUsaTapaBoca(boolean usaTapaBoca) {
+		this.usaTapaBoca = usaTapaBoca;
+	}
+	public boolean isCumpleTerminacionDNI() {
+		return cumpleTerminacionDNI;
+	}
+	public void setCumpleTerminacionDNI(boolean cumpleTerminacionDNI) {
+		this.cumpleTerminacionDNI = cumpleTerminacionDNI;
+	}
+	public boolean isPoseePermisoCirculacion() {
+		return poseePermisoCirculacion;
+	}
+	public void setPoseePermisoCirculacion(boolean poseePermisoCirculacion) {
+		this.poseePermisoCirculacion = poseePermisoCirculacion;
+	}
+	public boolean isEstaAcompanado() {
+		return estaAcompanado;
+	}
+	public void setEstaAcompanado(boolean estaAcompanado) {
+		this.estaAcompanado = estaAcompanado;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,12 +99,16 @@ public class ValidarCondicionSanitaria implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((persona == null) ? 0 : persona.hashCode());
 		result = prime * result + (poseePermisoCirculacion ? 1231 : 1237);
-		result = prime * result + ((registro == null) ? 0 : registro.hashCode());
 		result = prime * result + (usaTapaBoca ? 1231 : 1237);
 		return result;
 	}
 
-
+	@Override
+	public String toString() {
+		return "ValidarCondicionSanitaria [id=" + id + ", persona=" + persona + ", usaTapaBoca=" + usaTapaBoca
+				+ ", cumpleTerminacionDNI=" + cumpleTerminacionDNI + ", poseePermisoCirculacion="
+				+ poseePermisoCirculacion + ", estaAcompanado=" + estaAcompanado + "]";
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -112,62 +135,9 @@ public class ValidarCondicionSanitaria implements Serializable {
 			return false;
 		if (poseePermisoCirculacion != other.poseePermisoCirculacion)
 			return false;
-		if (registro == null) {
-			if (other.registro != null)
-				return false;
-		} else if (!registro.equals(other.registro))
-			return false;
 		if (usaTapaBoca != other.usaTapaBoca)
 			return false;
 		return true;
 	}
-
-
-
-	public boolean isEstaAcompanado() {
-		return estaAcompanado;
-	}
-
-
-
-	public void setEstaAcompanado(boolean estaAcompanado) {
-		this.estaAcompanado = estaAcompanado;
-	}
-
-
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Persona getPersona() {
-		return persona;
-	}
-	public void setPersona(Persona persona) {
-		this.persona = persona;
-	}
-	public boolean isUsaTapaBoca() {
-		return usaTapaBoca;
-	}
-	public void setUsaTapaBoca(boolean usaTapaBoca) {
-		this.usaTapaBoca = usaTapaBoca;
-	}
-	public boolean isCumpleTerminacionDNI() {
-		return cumpleTerminacionDNI;
-	}
-	public void setCumpleTerminacionDNI(boolean cumpleTerminacionDNI) {
-		this.cumpleTerminacionDNI = cumpleTerminacionDNI;
-	}
-	public boolean isPoseePermisoCirculacion() {
-		return poseePermisoCirculacion;
-	}
-	public void setPoseePermisoCirculacion(boolean poseePermisoCirculacion) {
-		this.poseePermisoCirculacion = poseePermisoCirculacion;
-	}
-	
 	
 }

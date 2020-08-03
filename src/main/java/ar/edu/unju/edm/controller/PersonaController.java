@@ -2,7 +2,6 @@ package ar.edu.unju.edm.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-//import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 
 import ar.edu.unju.edm.model.ConsultaAux;
 import ar.edu.unju.edm.model.ConsultaAux1;
@@ -40,6 +38,7 @@ public class PersonaController {
 	ICondicionService condicionService;
 	@Autowired
 	IBarrioService barrioService;
+
 	//agregar persona
 	@GetMapping("/cargarPersona")
 	public String agregarP(Model model) {
@@ -107,7 +106,6 @@ public class PersonaController {
 	}
 	
 	//consultas
-	
 	//Consulta 1 	
 	 @GetMapping("/consultaUno")
 	 public String consultar(Model model){
@@ -140,14 +138,14 @@ public class PersonaController {
 			 //recorrer los registros en el rango de fecha y hora
 			   for(RegistroTracking registro : todosRegistros) {
 				   //listadoPersona1.add(consulta);
-				  if(registro.getLocalidad().getBarrio().equals(Barrio)){ 
+				  if(registro.getBarrios().getBarrio().equals(Barrio)){ 
 					  //recorrer las condiciones sanitarias por si hay una coincidencia con el barrio agregar la condicion al listado condiciones
-					for(ValidarCondicionSanitaria condicion : registro.getValidadores() ) { 
+					for(ValidarCondicionSanitaria condicion : registro.getTesteosDeCondSant() ) { 
 					   consulta.setApellido(condicion.getPersona().getApellido());
 					   consulta.setNombres(condicion.getPersona().getNombres());
 					   consulta.setDocumento(condicion.getPersona().getDocumento());
 					   consulta.setId_testeos(condicion.getId());
-					   consulta.setBarrio(registro.getLocalidad().getBarrio());
+					   consulta.setBarrio(registro.getBarrios().getBarrio());
 					   listadoPersona1.add(consulta);
 					   condiciones.add(condicion);
 					   consulta = new ConsultaAux1();  
@@ -191,10 +189,10 @@ public class PersonaController {
 		//recorro los registros
 		   for(RegistroTracking registro : todosRegistros) {
 			   //recorro la lista de condiciones 
-			  for(ValidarCondicionSanitaria condicion : registro.getValidadores() ) {				  
+			  for(ValidarCondicionSanitaria condicion : registro.getTesteosDeCondSant() ) {				  
 				  if (condicion.getPersona().getDocumento().equals(personaEncontrada.getDocumento())) {  
 					 consulta.setFechayhora(registro.getFechaHora());
-					 consulta.setLocalidad(registro.getLocalidad().getBarrio());
+					 consulta.setLocalidad(registro.getBarrios().getBarrio());
 					 consulta.setIdCondicion(registro.getId());
 					 consulta.setApellido(personaEncontrada.getApellido());
 					 consulta.setNombre(personaEncontrada.getNombres());
@@ -245,7 +243,7 @@ public class PersonaController {
 		for(RegistroTracking registro : todosRegistros) {
 			   //recorro la lista de condiciones
 if(registro.getFechaHora().getDayOfMonth()==fecha.getDayOfMonth()&& registro.getFechaHora().getMonth()==fecha.getMonth()&&registro.getFechaHora().getYear()==fecha.getYear()){
-			  for(ValidarCondicionSanitaria condicion : registro.getValidadores()) {				 
+			  for(ValidarCondicionSanitaria condicion : registro.getTesteosDeCondSant()) {				 
 				  if (condicion.isCumpleTerminacionDNI()==false) {					  
 					  consulta.setApellidos(condicion.getPersona().getApellido());
 						 consulta.setId_test(condicion.getId());

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>BD</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+
+</head>
+<body>
+<div th:insert="layout/header :: header"></div>
+	<div class="container">
+		<br> <br> <br>
+
+		<div class="card col-md-6 mx-auto">
+			<div class="card-body">
+
+					<p>Seleccione la base de datos que desea trabajar.</p>
+					<br>
+					<div style="background-color: #20B2AA;" align=center class="p-2 mb-2 ">
+					<a class="button_1 text-white" th:href="@{/Lusuarios}" href="#">Usuarios</a>
+					</div>
+						 <br> 
+					<div style="background-color: #20B2AA;" align=center class="p-2 mb-2 ">
+						 <a	class="button_1 text-white" th:href="@{/Lbarrios}" href="#">Barrios</a>
+					</div>
+						<br> <br> <br>
+
+			</div>
+		</div>
+	</div>
+
+	<div th:insert="layout/footer :: footer"></div>
+
+
+
+</body>
+</html>

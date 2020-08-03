@@ -13,6 +13,5 @@ import ar.edu.unju.edm.model.Persona;
 public interface IPersonaRepository extends JpaRepository <Persona,Long>{
 	@Query("from Persona e order by e.id")
 	public List<Persona> listarPersonas();
-	//public Optional <Persona> findByApellidoPersona(String apellidoPersona);
 	public Optional<Persona> findByDocumento(String documento);
 }
